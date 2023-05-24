@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c87793a1-210c-4a09-ab26-3b7cf0f1b101" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/src/main/java/AutoWiredPackage/AutoWired.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/src/main/java/AutoWiredPackage/AutoWiredDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/src/main/java/ExecDemo/Demo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/src/main/java/enityDemo/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoWired/src/main/java/main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SpringArchLearn.iml" afterDir="false" />
-    </list>
+    <list default="true" id="c87793a1-210c-4a09-ab26-3b7cf0f1b101" name="Changes" comment="5.24 AutoWired的自我实现" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,8 +62,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684920616265</updated>
-      <workItem from="1684920617991" duration="3925000" />
+      <workItem from="1684920617991" duration="4255000" />
     </task>
+    <task id="LOCAL-00001" summary="5.24 AutoWired的自我实现">
+      <created>1684924637116</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684924637116</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,6 +87,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="5.24 AutoWired的自我实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="5.24 AutoWired的自我实现" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

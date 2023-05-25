@@ -13,9 +13,19 @@ public class main {
         User user = new User("hello,AutoWired");
         hashMap.put(Demo.class, demo);
         hashMap.put(User.class, user);
+        Demo demo1 = (Demo) hashMap.get(Demo.class);
+        //未装配前
+        try {
+            System.out.println("未装配前:" + demo1.getUser().getName());
+        } catch (NullPointerException e) {
+            System.out.println("未装配前:demo1.getUser().getName()对象为空");
+        }
+
         //自动装配
         AutoWiredDemo autoWiredDemo = new AutoWiredDemo(hashMap);
-        Demo demo1 = (Demo) hashMap.get(Demo.class);
-        System.out.println(demo1.getUser().getName());
+        autoWiredDemo.checkHaveAutoWiredAnnotion(demo);
+
+        //测试结果
+        System.out.println("装配后:demo1.getUser().getName()值为"+demo1.getUser().getName());
     }
 }

@@ -8,25 +8,24 @@ import java.util.HashMap;
  */
 public class AutoWiredDemo {
 
-    private HashMap<Object,Object> context;
+    private HashMap<Object, Object> context;
 
-    public AutoWiredDemo(HashMap<Object,Object> context){
+    public AutoWiredDemo(HashMap<Object, Object> context) {
         this.context = context;
     }
 
-    public HashMap<Object,Object> checkHaveAutoWiredAnnotion(Object bean){
+    public HashMap<Object, Object> checkHaveAutoWiredAnnotion(Object bean) {
         Class<?> beanClass = bean.getClass();
         Field[] declaredFields = beanClass.getDeclaredFields();
         for (Field declaredField : declaredFields) {
-            System.out.println(declaredField.isAnnotationPresent(AutoWired.class));
-            if(declaredField.isAnnotationPresent(AutoWired.class)){
+            if (declaredField.isAnnotationPresent(AutoWired.class)) {
 
                 Class<?> type = declaredField.getType();
                 Object filedValue = context.get(type);
 
                 try {
                     declaredField.setAccessible(true);
-                    declaredField.set(bean,filedValue);
+                    declaredField.set(bean, filedValue);
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }

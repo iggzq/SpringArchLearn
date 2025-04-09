@@ -1,6 +1,10 @@
-# 1.SpringApplication‘s  Constructor ~SpringApplication.class~
+# 1.SpringApplication‘s  Constructor
 
-## 1.1 SpringApplication application = new SpringApplication(Class<?>... primarySources);~SpringApplication.java~
+# &SpringApplication.class&
+
+## 1.1 SpringApplication application = new SpringApplication(Class<?>... primarySources);
+
+## &SpringApplication.java&
 
 ```java
 public SpringApplication(Class<?>... primarySources) {
@@ -32,7 +36,9 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 }
 ```
 
-## 1.2 WebApplicationType.deduceFromClasspath()~WebApplicationType.java~
+## 1.2 WebApplicationType.deduceFromClasspath()
+
+## &WebApplicationType.java&
 
 ```java
 private static final String[] SERVLET_INDICATOR_CLASSES = { "jkarta.servlet.Servlet",
@@ -63,7 +69,9 @@ static WebApplicationType deduceFromClasspath() {
 }
 ```
 
-## 1.3 getSpringFactoriesInstances(Class<T> type) ~SpringApplication.java~
+## 1.3 getSpringFactoriesInstances(Class<T> type)
+
+## &SpringApplication.java&
 
 ```java
 private <T> List<T> getSpringFactoriesInstances(Class<T> type, ArgumentResolver argumentResolver) {
@@ -71,7 +79,9 @@ private <T> List<T> getSpringFactoriesInstances(Class<T> type, ArgumentResolver 
 }
 ```
 
-### 1.3.1 SpringFactoriesLoader.forDefaultResourceLocation(@Nullable ClassLoader classLoader) ~SpringFactoriesLoader.java~
+### 1.3.1 SpringFactoriesLoader.forDefaultResourceLocation(@Nullable ClassLoader classLoader)
+
+### &SpringFactoriesLoader.java&
 
 #### 1.3.1.1
 
@@ -113,61 +123,63 @@ public static SpringFactoriesLoader forResourceLocation(String resourceLocation,
 
 ```java
 protected static Map<String, List<String>> loadFactoriesResource(ClassLoader classLoader, String resourceLocation) {
-	Map<String, List<String>> result = new LinkedHashMap<>();
-	try {
+    Map<String, List<String>> result = new LinkedHashMap<>();
+    try {
         // classLoader.getResources(resourceLocation)为获取项目中所有的spring.factories文件的地址url
-		Enumeration<URL> urls = classLoader.getResources(resourceLocation);
+        Enumeration<URL> urls = classLoader.getResources(resourceLocation);
         // 遍历每个url地址
-		while (urls.hasMoreElements()) {
-			UrlResource resource = new UrlResource(urls.nextElement());
+        while (urls.hasMoreElements()) {
+            UrlResource resource = new UrlResource(urls.nextElement());
             //Properties里有ConcurrentHashMap<Object, Object> map;对象，此处为根据之前获取的url读取spring.factories文件里的内容，并保存在properties对象里的map集合里
             //map集合里key为接口和抽象类，value为具体实现类集合
-			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+            Properties properties = PropertiesLoaderUtils.loadProperties(resource);
             //遍历properties里的map集合，将里面的内容保存到result中
-			properties.forEach((name, value) -> {
-				String[] factoryImplementationNames = StringUtils.commaDelimitedListToStringArray((String) value);
-				List<String> implementations = result.computeIfAbsent(((String) name).trim(),
-						key -> new ArrayList<>(factoryImplementationNames.length));
+            properties.forEach((name, value) -> {
+                String[] factoryImplementationNames = StringUtils.commaDelimitedListToStringArray((String) value);
+                List<String> implementations = result.computeIfAbsent(((String) name).trim(),
+                        key -> new ArrayList<>(factoryImplementationNames.length));
                 // 将factoryImplementationNames中的值保存到result的value集合中
-				Arrays.stream(factoryImplementationNames).map(String::trim).forEach(implementations::add);
-			});
-		}
+                Arrays.stream(factoryImplementationNames).map(String::trim).forEach(implementations::add);
+            });
+        }
         // 确保每个键对应的实现类列表都是唯一的
-		result.replaceAll(SpringFactoriesLoader::toDistinctUnmodifiableList);
-	}
-	catch (IOException ex) {
-		throw new IllegalArgumentException("Unable to load factories from location [" + resourceLocation + "]", ex);
-	}
+        result.replaceAll(SpringFactoriesLoader::toDistinctUnmodifiableList);
+    }
+    catch (IOException ex) {
+        throw new IllegalArgumentException("Unable to load factories from location [" + resourceLocation + "]", ex);
+    }
     // 返回集合，并保证集合的不可修改
-	return Collections.unmodifiableMap(result);
+    return Collections.unmodifiableMap(result);
 }
 ```
 
 ### 1.3.2 SpringFactoriesLoader.load(Class<T> factoryType, @Nullable ArgumentResolver argumentResolver)
 
+### &SpringFactoriesLoader.java&
+
 ```java
 public <T> List<T> load(Class<T> factoryType, @Nullable ArgumentResolver argumentResolver,
-		@Nullable FailureHandler failureHandler) {
+        @Nullable FailureHandler failureHandler) {
 
-	Assert.notNull(factoryType, "'factoryType' must not be null");
+    Assert.notNull(factoryType, "'factoryType' must not be null");
     // 根据1.3.1.3中的map集合获取实现类url集合
-	List<String> implementationNames = loadFactoryNames(factoryType);
-	logger.trace(LogMessage.format("Loaded [%s] names: %s", factoryType.getName(), implementationNames));
-	List<T> result = new ArrayList<>(implementationNames.size());
-	FailureHandler failureHandlerToUse = (failureHandler != null) ? failureHandler : THROWING_FAILURE_HANDLER;
-	// 遍历实现类的url
+    List<String> implementationNames = loadFactoryNames(factoryType);
+    logger.trace(LogMessage.format("Loaded [%s] names: %s", factoryType.getName(), implementationNames));
+    List<T> result = new ArrayList<>(implementationNames.size());
+    FailureHandler failureHandlerToUse = (failureHandler != null) ? failureHandler : THROWING_FAILURE_HANDLER;
+    // 遍历实现类的url
     for (String implementationName : implementationNames) {
         // 详情见1.3.2.1 实例化实现类
-		T factory = instantiateFactory(implementationName, factoryType, argumentResolver, failureHandlerToUse);
-		if (factory != null) {
+        T factory = instantiateFactory(implementationName, factoryType, argumentResolver, failureHandlerToUse);
+        if (factory != null) {
             // 将实例化好的对象保存到result集合中
-			result.add(factory);
-		}
-	}
-	AnnotationAwareOrderComparator.sort(result);
+            result.add(factory);
+        }
+    }
+    AnnotationAwareOrderComparator.sort(result);
     // 返回result集合，此时getSpringFactoriesInstances(BootstrapRegistryInitializer.class)执行完毕
     // 回到SpringApplication.java中的代码中
-	return result;
+    return result;
 }
 ```
 
@@ -176,22 +188,22 @@ public <T> List<T> load(Class<T> factoryType, @Nullable ArgumentResolver argumen
 ```java
 @Nullable
 protected <T> T instantiateFactory(String implementationName, Class<T> type,
-		@Nullable ArgumentResolver argumentResolver, FailureHandler failureHandler) {
+        @Nullable ArgumentResolver argumentResolver, FailureHandler failureHandler) {
 
-	try {
+    try {
         // 获取实现类的代理类
-		Class<?> factoryImplementationClass = ClassUtils.forName(implementationName, this.classLoader);
-		Assert.isTrue(type.isAssignableFrom(factoryImplementationClass), () ->
-				"Class [%s] is not assignable to factory type [%s]".formatted(implementationName, type.getName()));
+        Class<?> factoryImplementationClass = ClassUtils.forName(implementationName, this.classLoader);
+        Assert.isTrue(type.isAssignableFrom(factoryImplementationClass), () ->
+                "Class [%s] is not assignable to factory type [%s]".formatted(implementationName, type.getName()));
         // FactoryInstantiator.forClass(factoryImplementationClass)获取构造器方法对象，详情见1.3.2.2
-		FactoryInstantiator<T> factoryInstantiator = FactoryInstantiator.forClass(factoryImplementationClass);
+        FactoryInstantiator<T> factoryInstantiator = FactoryInstantiator.forClass(factoryImplementationClass);
         // 实例化对象并返回，详情见1.3.2.3
-		return factoryInstantiator.instantiate(argumentResolver);
-	}
-	catch (Throwable ex) {
-		failureHandler.handleFailure(type, implementationName, ex);
-		return null;
-	}
+        return factoryInstantiator.instantiate(argumentResolver);
+    }
+    catch (Throwable ex) {
+        failureHandler.handleFailure(type, implementationName, ex);
+        return null;
+    }
 }
 ```
 
@@ -200,11 +212,11 @@ protected <T> T instantiateFactory(String implementationName, Class<T> type,
 ```java
 static <T> FactoryInstantiator<T> forClass(Class<?> factoryImplementationClass) {
     // 获取实现类的构造方法
-	Constructor<?> constructor = findConstructor(factoryImplementationClass);
-	Assert.state(constructor != null, () ->
-			"Class [%s] has no suitable constructor".formatted(factoryImplementationClass.getName()));
+    Constructor<?> constructor = findConstructor(factoryImplementationClass);
+    Assert.state(constructor != null, () ->
+            "Class [%s] has no suitable constructor".formatted(factoryImplementationClass.getName()));
     // 返回实现类的构造方法
-	return new FactoryInstantiator<>((Constructor<T>) constructor);
+    return new FactoryInstantiator<>((Constructor<T>) constructor);
 }
 ```
 
@@ -212,11 +224,11 @@ static <T> FactoryInstantiator<T> forClass(Class<?> factoryImplementationClass) 
 
 ```java
 T instantiate(@Nullable ArgumentResolver argumentResolver) throws Exception {
-	Object[] args = resolveArgs(argumentResolver);
-	if (isKotlinType(this.constructor.getDeclaringClass())) {
-		return KotlinDelegate.instantiate(this.constructor, args);
-	}
+    Object[] args = resolveArgs(argumentResolver);
+    if (isKotlinType(this.constructor.getDeclaringClass())) {
+        return KotlinDelegate.instantiate(this.constructor, args);
+    }
     // 利用1.3.2.2获取的类的构造方法实例化对象，并返回
-	return this.constructor.newInstance(args);
+    return this.constructor.newInstance(args);
 }
 ```
